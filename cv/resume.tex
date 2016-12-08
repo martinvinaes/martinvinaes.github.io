@@ -1,0 +1,452 @@
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+\usepackage{comment}
+\usepackage{mathptmx}% ads time new roman
+\usepackage{bibentry}	
+\usepackage{microtype} % giver optisk "lige bagkant", bedre orddelingen
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+%orddeling
+\hyphenation{regres-sions-dis-kontinuitets-designet}
+
+% Simpler bibsection for CV sections
+% (thanks to natbib for inspiration)
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em} %1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newenvironment{bibsection}%
+        {\begin{enumerate}{}{%
+%        {\begin{list}{}{%
+       \setlength{\leftmargin}{\bibhang}%
+       \setlength{\itemindent}{-\leftmargin}%
+       \setlength{\itemsep}{\bibsep}%
+       \setlength{\parsep}{\z@}%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{enumerate}\vspace{-.6\baselineskip}}
+%        {\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%\textendash 
+
+\renewcommand{\labelitemi}{$\textendash$}
+\renewcommand{\labelitemii}{$\textopenbullet$}
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+\usepackage[shortlabels]{enumitem}
+\usepackage{etaremune}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+% The section headings
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \hyphenpenalty=10000%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt]}
+        {\end{itemize}\vspace{-.6\baselineskip}}
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+
+%remove first blank page
+\begin{document}
+%\nobibliography{cvpubs} 
+%\bibliographystyle{chicago}
+%\newpage
+%\pagenumbering{Roman}
+%\setcounter{2}{1}
+
+%\pagestyle{empty}
+%Bilag B
+%CONTACT INFORMATION*****************************************************************************************************************
+\begin{large} \bf Martin Vin\ae s Larsen \end{large}  $\cdot$   \today  	
+ \vspace{1em} 
+			
+\section{Contact}
+			
+Department of Political Science\hfill Office: (+45) 35 32 46 37 \\
+University of Copenhagen   \hfill Mobile: (+45) 60 71 65 45  \\
+{\O}ster Farimagsgade 5, opgang E \hfill Work e-mail: mvl@ifs.ku.dk \\
+DK-1353 Copenhagen K, Denmark  \hfill Private e-mail: vinaes@gmail.com \\
+																		
+%RESEARCH INTERESTS*******************************************************************************************************************
+\section{Research Interests}
+
+Electoral accountability and the quality of voter decision-making, economic voting, rational choice theory, political psychology, the role of information in EU elections and causal inference. 
+
+
+%EMPLOYMENT*******************************************************************************************************************************
+%\section{Academic Appointments}
+
+%{\bf Department of Political Science, University of Copenhagen:}  \hfill  Nov. 2013 -- \\
+%$\cdot$ Assistant professor (public administration and quantitative methods) \\
+
+%{\bf Danish Ministry of Education: } \hfill Nov. 2013 --  \\
+%$\cdot$ National external examiner corps for political science  \\
+
+%{\bf Department of Political Science, University of Copenhagen:}   \hfill May 2013 --  \\
+%$\cdot$ Post.doc. \\
+		
+%{\bf Department of Political Science, University of Copenhagen:}  \hfill Feb. 2013 -- Apr. 2013 \\
+%$\cdot$ Scientific employee \\
+
+%{\bf University of Copenhagen:} \hfill 2008 -- 2009  \\
+%$\cdot$ Student research assistant \\
+
+%{\bf Department of Political Science, University of Copenhagen:} \hfill 2007 -- 2008 \\
+%$\cdot$  Student research assistant
+
+
+%EDUCATION*******************************************************************************************************************************
+\section{Education}
+		
+{\bf Department of Political Science, University of Copenhagen:} \hfill Aug. 2017 (expected) \\
+$\cdot$ PhD: ``Electoral accountability and Economic voting''. \\
+$\cdot$ Advisor: Professor Kasper M\o ller Hansen.  \\
+
+{\bf Department of Political Science, University of Copenhagen:} \hfill Aug. 2015 \\
+$\cdot$ M.Sc. Political science \\
+$\cdot$  Thesis: ``Voters infer incumbent quality from the state of the economy.''  \\
+
+{\bf Chair in Electoral democracy, University of Montreal:}  \hfill Aug. 2014 -- Jan. 2015  \\
+$\cdot$ Visiting researcher \\
+	
+{\bf Department of Political Science, University of Copenhagen:} \hfill Jan. 2012\\ 
+$\cdot$ B.Sc. Political science \\
+
+
+
+%Employment
+
+\section{Additional training}
+{\bf ICPSR, University of Michigan:} \hfill Aug 2014 \\
+$\cdot$ Summer Program \\
+
+{\bf Experiments, University of Oxford:} \hfill July 2012 \\
+$\cdot$ Summer Program \\
+
+{\bf Summer Institute in Political Psychology, Stanford University:}, \hfill Aug. 2011 \\
+$\cdot$ Summer Program \\
+\section{Employment}
+
+{\bf Department of Political Science, University of Copenhagen:} \hfill Aug. 2013  ---  \\
+$\cdot$ Ph.D. Fellow\\
+
+
+
+{\bf EUvox:} \hfill Mar. 2014 \\
+$\cdot$ Communications director for Danish part of the EUvox VAA\\
+
+{\bf Ministry of Finance:} \hfill Dec. 2011 --- Jan. 2013 \\
+$\cdot$ Student assistant, Office of Municipal Economics and Regions \\
+
+{\bf Department of Political Science, University of Copenhagen:} \hfill Dec. 2010 --- Jan. 2013 \\
+$\cdot$ Teaching  Assistant in Research Methods I \\
+
+
+\newpage
+
+%PUBLICATIONS****************************************************************************************************************************
+%\renewcommand\refname{\bibnumfmt
+%enumerate should decrease
+
+\section{Articles with revise \& resubmit}
+\begin{etaremune}
+%PEER REVIEWED ****************
+
+\item \textbf{Larsen, Martin Vinæs} (2016). Incumbent Tenure Crowds Out Economic Voting. \textit{Revise \& Resubmit in The Journal of Politics}.
+
+\item Dahlgaard, Jens Olav; Hansen, Jonas H; Hansen, Kasper M; \textbf{Larsen, Martin Vinæs} (2016) How Election Polls Shape Voting Behavior \textit{Revise \& Resubmit in Scandinavian Political Studies}.
+
+\hspace{-1cm}\section{Peer Reviewed Articles}
+
+
+\item Beach, Derek; Hansen, Kasper M.; \textbf{Larsen, Martin Vinæs} (2016). How campaigns enhance European issues voting during European Parliament elections.  \textit{Political Science Research and Methods}, Conditional Accept.
+
+\item Dahlgaard, Jens Olav; Hansen, Jonas H; Hansen, Kasper M; \textbf{Larsen, Martin Vinæs} (2016). How are Voters Influenced by Opinion Polls? The Effect of Polls on Voting Behavior and Party Sympathy  \textit{World Political Science Review}, Early View.
+
+\item Esben Høgh; \textbf{Larsen, Martin Vinæs} (2016). Can information increase turnout in European Parliament elections? Evidence from a quasi-experiment in Denmark. \textit{JCMS: Journal of Common Market studies.} 54 (6), 1495---1508. 
+
+\item \textbf{Larsen, Martin Vinæs} (2016). Economic Conditions Affect Support for Prime Minister Parties in Scandinavia. \textit{Scandinavian Political Studies.} 39 (3), 226--–241. 
+
+\item Mats Joe Bordacconi; \textbf{Larsen, Martin Vinæs} (2014). Regression to causality: Regression-style presentation influences causal attribution. \textit{Research and politics.} 1 (2).
+
+\item Nielsen, Sigge Winther; \textbf{Larsen, Martin Vinæs} (2014). Party Brands and Voting. \textit{Electoral Studies.} 33, 153---165.
+
+
+% \hspace{-1cm}\section{Comments and Discussions}
+
+
+%CONFERECE and WORKING PAPER ****************
+\hspace{-1cm}\section{Conference and Working papers}
+
+\item \textbf{Larsen, Martin Vinæs}; Olsen, Asmus Leth (2015). Incumbent tax setting and clarity of political responsibility. \textit{Presented at the American Political Science Association Meeting, 2016, panel: ``Economic foundations of electoral politics''}. 
+
+\item \textbf{Larsen, Martin Vinæs} (2015). Is there a self-serving bias in attribution of political responsibility? \textit{Presented at the Midwest Political Science Association Meeting, 2016, Panel: ”Accountability for Economic Performance”.}
+
+\item \textbf{Larsen, Martin Vinæs}; Frederik Hjorth; Kim Sønderskov; Peter Dinesen (2015). Housing Bubbles and Incumbent Support. \textit{American Political Science Association Meeting, 2016, Panel: New Directions in Policy Feedback Research}.
+
+\item \textbf{Larsen, Martin Vinæs}  (2015). Clarity of responsibility and electoral accountability: Evidence of a causal relationship from reform of labor market regulation. \textit{Presented at the Midwest Political Science Association Meeting, 2015, panel: ``Experimental Approaches to Economic Perceptions''}.
+
+
+%DANISH PEER REVIEWED ****************
+
+\hspace{-1cm}\section{Danish Peer Reviewed Articles}
+
+\item Dahlgaard, Jens Olav; Hansen, Jonas H; Hansen, Kasper M; \textbf{Larsen, Martin Vinæs} (2015). Hvordan påvirkes vælgerne af meningsmålinger? Effekten af meningsmålinger på danskernes stemmeadfærd og sympati for partierne. \textit{Politica} 46 (1): 5-23
+
+\item Nielsen, Sigge Winther; \textbf{Larsen, Martin Vinæs}; Egeberg, Jesper de Hemmer  (2011). Vi er alle spindoktorer. \textit{{\O}konomi og Politik} 84 (1): 19--33
+
+\newpage
+
+
+%BOOKS ****************
+\hspace{-1cm}\section{Book chapters}
+
+\item \textbf{Larsen, Martin Vinæs}; Nielsen, Sigge Winther (2016). Den kommenterede valgkamp, in Goul Andersen, Jørgen; Shamshiri, Ditte: \textit{Vælgere på Vandring}. Frederiksberg: Frydenlund Academic.
+
+\item Nielsen, Sigge Winther; \textbf{Larsen, Martin Vinæs}; Egeberg, Jesper de Hemmer (2012). Den politiske mandagstræner, in Nielsen, Sigge Winther: Politisk Marketing. København: Karnov Group.
+
+\item \textbf{Larsen, Martin Vinæs} (2012). Praktikerne har ordet: Samtaler med de danske partier, in Nielsen, Sigge Winther: Politisk Marketing. København: Karnov Group.
+
+%REPORTS ****************
+\hspace{-1cm}\section{Reports}
+
+\item \textbf{Larsen, Martin Vinæs} (2014). Gennemsnit af meningsmålinger forudsiger
+valgresultatet. CVAP Working Paper Series 2016.
+
+\item Dahlgaard, Jens Olav; Hansen, Jonas H.; Hansen, Kasper M.; \textbf{Larsen, Martin Vinæs} (2014). Hvordan påvirkes vælgerne af meningsmålinger? Rapport om effekten af meningsmålinger på danskernes stemmeadfærd og sympati for partierne. CVAP Working Paper Series 1/2014.
+
+
+
+
+
+%REVIEWS ****************
+ 
+
+\end{etaremune}
+
+
+\hspace{-1cm}\section{Work in progress}
+
+
+\begin{itemize}
+
+\item ``Translating Preferences into Numbers (with Rasmus Tue Pedersen)'' 
+
+\item ``Benchmarking responsibly? How voters compare economic performance.'' 
+
+\item ``Who is poor? People's perception of poverty (with Esben Hogh).'' 
+
+\item ``Absolute Majorities as a Regression Discontinuity: Applications and Issues'' (with Asmus Leth Olsen) 
+
+
+
+
+
+\end{itemize}
+
+%Professional Memberships:
+%- American Political Science Association (2011-)
+%- Midwest Political Science Association (2011–)
+% PMRC?
+
+%ACADEMIC TEACHING EXPERIENCE*********************************************************************************************************
+\section{Academic Teaching}
+
+Teaching at the Department of Political Science, University of Copenhagen: \\
+
+
+
+
+\textbf{M.Sc.-level course:}
+
+\begin{itemize}
+
+\item ``New and classic approaches to Political Behavior''\\
+$\cdot$ Course design and course teaching: spring 2015.	
+
+\item ``Advanced Quantitave methods''\\
+$\cdot$ Course design and course teaching: spring 2015.	
+
+\end{itemize}
+
+\textbf{BA.-level course:}
+
+\begin{itemize}
+
+\item ``Theories and Approaches to Political Science'' \\
+$\cdot$ Full course teaching spring 2014, lectures in fall, 2014, 2015, 2016.	
+
+\item ``Advanced Quantitave methods''\\
+$\cdot$ Course design and course teaching in spring 2015.	
+	
+\item ``Research methods 2'' \\
+$\cdot$ Ran workshops in spring of 2014.
+
+\item ``Research methods 1'' \\
+$\cdot$ TA in fall of 2010, 2011, 2012 and 2013.
+
+\end{itemize}
+
+%DEPARTMENTAL SERVICE**************************************************************************************************
+
+%ACADEMIC TEACHING EXPERIENCE*********************************************************************************************************
+\section{Academic Supervision}
+Supervised 4 MA-thesis (6 students). 
+
+
+%AWARDS*********************************************************************************************************
+%\section{Awards}
+
+%$\cdot$ \textit{Teacher of the Year 2015} at the Ms.C.-level at the Department of Political Science in Copenhagen (academic year 2014/2015). Awarded the prize for my course \textit{The Psychology of the Public Sector} taught fall of 2014.  \\
+
+
+
+
+%GRANTS*********************************************************************************************************
+\section{Grants and Awards}
+
+Best Paper in Politica 2015. \\
+
+ Nominated for \textit{Teacher of the Year 2012} and \textit{Teacher of the Year 2015} at the Department of Political Science, University of Copenhagen for courses \textit{Research Methods 1} and \textit{Political behavior}. \\
+
+Travel grants:
+$\cdot$ Oticon foundation: \underline{19,500 DKK}, 2014, 2015. \\
+
+$\cdot$ Knud Højgaards foundation: \underline{22,000 DKK}, 2014, 2015. \\
+  
+$\cdot$ Augustinus foundation: \underline{20,000 DKK}, 2014.   \\
+
+$\cdot$ Danish Tennis Foundation: \underline{10,000 DKK}, 2014. \\ 
+
+
+%INVITED TALKS*********************************************************************************************************
+\section{Talks and Conference Presentations}
+
+Paper presentations at conferences: American Political Science Association Conference 2015, 2016; Midwest Political Science Association 2015, 2016 (2); Amsterdam Political Psychology Conference 2015; Danish Political Science Association 2015, 2016 (2). \\
+
+Clarity of Responsibility and economic voting. Presentation at University Laval, Canada. \textit{27-11-2014} \\
+
+Economic voting and time in office. Presentation at the Chair in Electoral Studies, University of Montreal, Canada. \textit{12-02-2014}  \\
+
+
+
+\section{Service to the profession and administration}
+
+$\cdot$ Reviewer experience: Electoral Studies, Scandinavian Political Studies, European Union Politics, Political Behavior. \\
+
+Discussant: Danish Political Science Association: 2015, 2016. \\
+
+Chair: Danish Political Science Association: 2015. \\
+
+Ph.D. representative, Department of Political Science, University of Copenhagen, 2014 -- 2016  \\
+
+Ph.D. club president, Department of Political Science, University of Copenhagen, 2016 --  \\
+
+
+\section{Media}
+
+Regular commentator on political events, various news platforms: radio, TV, regional and national Danish newspapers ($>100$ times a year since 2013).  \\ \vspace{0.1in}
+
+ Research results featured in: 
+ $\cdot$ P1 Orientering 
+ $\cdot$ Ugebrevet A4
+ $\cdot$ Videnskab.dk
+ $\cdot$ Berlingske
+ $\cdot$ Politiken 
+ $\cdot$ Information 
+ $\cdot$ Jyllands Posten
+ $\cdot$ DR2 Deadline 
+
+\section{Political Writing}
+{\bf PoliLab, Politiken:} \hfill Sep. 2015  -- Jun. 2016  \\
+$\cdot$ Contributer to PoliLab with articles about politics and political research.\\
+
+{\bf Analysis, tv2.dk:} \hfill May 2014  -- Jun. 2015  \\
+$\cdot$ Contributor to tv2.dk with articles about politics and political research.\\
+\end{document}
+
